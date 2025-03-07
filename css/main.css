@@ -1,0 +1,9 @@
+.imagemDoutorAtende{
+    float: left;
+    border: red 1px;
+}
+.card-body{
+    padding: 10px 5px 5px 10px;
+    /* border: solid red 1px; */
+    /* max-width: 90%; */
+}
