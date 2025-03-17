@@ -59,8 +59,15 @@ class ValidaLogin {
     }
 
     private function redirecionarDashboard() {
+        
         $dashboard = $this->tipoUsuario === 'medico' ? 'dashboard_medico.php' : 'dashboard_Paciente.php';
-        header("Location: $dashboard");
+
+        if($dashboard == 'medico_dashboard.php'){
+            header("Location: $dashboard");
+        }
+        else{
+            header("Location: $dashboard");
+        }
         exit();
     }
 
