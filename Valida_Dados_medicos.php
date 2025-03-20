@@ -15,11 +15,14 @@ class Medico {
     private $genero;
     private $ano_formacao;
 
+    private $Foto_perfil;
+
     public function __construct($conn) {
         $this->conn = $conn;
     }
 
     public function setDados($dados) {
+        $this->Foto_perfil = trim($dados['Foto_perfil']);
         $this->nome = trim($dados['nome']);
         $this->especialidade = trim($dados['especialidade']);
         $this->email = trim($dados['email']);

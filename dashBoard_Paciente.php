@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <?php 
+    include("bancoDeDados/sql/conexaoBD.php");
 
     session_start();
-
-    if(!isset($_SESSION['cpf']) || $_SESSION['identificador'] != 'paciente'){
+    
+    if (!isset($_SESSION['cpf']) || $_SESSION['tipo_usuario'] !== 'paciente') {
         session_destroy();
-        header('index.php');
-        // exit();
+        header("Location: index.php");
+        exit();
     }
-    // echo("<br>");
-    // echo("Esse é o post <br>");
-    // print_r($_POST);
-    // print_r($_SESSION);
-    // print_r($resultado);
+    
+    $conexao = new ConexaoBD();
+    $conn = $conexao->getConexao();
+    
+    class Paciente {
+        private $conn;
+        private $cpf;
+    
+        public function __construct($conn, $cpf) {
+            $this->conn = $conn;
+            $this->cpf = $cpf;
+        }
+    
+        public function buscarDadosPaciente() {
+            $query = 'SELECT nome, email, telefone, data_nascimento, sexo, tipo_sanguineo, foto_perfil FROM user_pacientes WHERE cpf = ?';
+            $stmt = $this->conn->prepare($query);
+    
+            if (!$stmt) {
+                die("Erro na preparação da consulta: " . $this->conn->error);
+            }
+    
+            $stmt->bind_param('s', $this->cpf);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+    
+            if ($resultado->num_rows > 0) {
+                return $resultado->fetch_assoc(); // Retorna os dados do paciente
+            } else {
+                return null; // Nenhum paciente encontrado
+            }
+        }
+    }
+    
+    $paciente = new Paciente($conn, $_SESSION['cpf']);
+    $dadosPaciente = $paciente->buscarDadosPaciente();
+    
+    if (!$dadosPaciente) {
+        echo "Paciente não encontrado.";
+        exit();
+    }
+    
+    // Teste: Exibir os dados do paciente
+    // print_r($dadosPaciente);
 
 ?>
 <html lang="pt-br">
@@ -35,8 +74,8 @@
     <!-- Menu Lateral -->
     <div class="sidebar">
         <h3 class="text-center">Paciente</h3>
-        <img src="images/image perfil.jpg" class="profile-img mx-auto d-block" alt="Foto de perfil">
-        <p class="text-center">Nome do Paciente</p>
+        <img src="<?php $dadosPaciente['foto_perfil']?>" class="profile-img mx-auto d-block" alt="Foto de perfil">
+        <p class="text-center"><?php echo $dadosPaciente['nome']?></p>
         <a href="#"><i class="fas fa-home"></i> Dashboard</a>
         <a href="#"><i class="fas fa-file-medical"></i> Prontuário</a>
         <a href="#"><i class="fas fa-hospital"></i> Hospitais Visitados</a>
