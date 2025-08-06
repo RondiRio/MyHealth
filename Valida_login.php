@@ -1,86 +1,88 @@
 <?php
-include_once('bancoDeDados/sql/conexaoBD.php');
+// 1. FUNDAÇÃO
+// Usamos o 'iniciar.php' que já lida com a sessão e nos dá as ferramentas.
+require_once 'iniciar.php';
+
+// Verificamos o CSRF e o método POST aqui fora da classe.
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$seguranca->validar_csrf_token($_POST['csrf_token'] ?? '')) {
+    $_SESSION['notificacao'] = ['tipo' => 'erro', 'mensagem' => 'Acesso inválido ou formulário expirado.'];
+    header('Location: index.php'); // Redireciona para o login na index
+    exit;
+}
 
 class ValidaLogin {
-    private $conn;
-    private $tipoUsuario;
-    private $identificador;
-    private $senha;
+    private $conexaoBD;
+    private $seguranca;
 
-    public function __construct(ConexaoBD $conexao) {
-        $this->conn = $conexao->getConexao();
+    // Construtor agora recebe as dependências do nosso sistema.
+    public function __construct(ConexaoBD $conexaoBD, Seguranca $seguranca) {
+        $this->conexaoBD = $conexaoBD;
+        $this->seguranca = $seguranca;
     }
 
-    public function recebeDados($tipoUsuario, $identificador, $senha) {
-        $this->tipoUsuario = $tipoUsuario;
-        $this->identificador = $identificador;
-        $this->senha = $senha;
-    }
+    // O método principal que orquestra a validação.
+    public function validarUsuario(string $tipoUsuario, string $identificador, string $senha) {
+        $tabela = ($tipoUsuario === 'medico') ? 'user_medicos' : 'user_pacientes';
+        $coluna = ($tipoUsuario === 'medico') ? 'crm' : 'cpf';
+        
+        // Usamos nosso método seguro para a consulta.
+        $sql = "SELECT * FROM $tabela WHERE $coluna = ?";
+        $stmt = $this->conexaoBD->proteger_sql($sql, [$identificador]);
+        $usuario = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
 
-    public function validarUsuario() {
-        $query = $this->tipoUsuario === 'medico' 
-            ? 'SELECT * FROM user_medicos WHERE crm = ?' 
-            : 'SELECT * FROM user_pacientes WHERE cpf = ?';
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('s', $this->identificador);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        if ($resultado->num_rows > 0) {
-            $usuario = $resultado->fetch_assoc();
-            $this->verificarSenha($usuario);
+        if ($usuario && password_verify($senha, $usuario['senha'])) {
+            // Sucesso! Inicia a sessão completa.
+            $this->iniciarSessaoCompleta($usuario, $tipoUsuario);
         } else {
-            $this->setErroLogin('Usuário não encontrado.');
+            // Falha no login.
+            $this->setErroLogin('Identificador ou senha incorretos.');
         }
     }
 
-    private function verificarSenha($usuario) {
-        if (password_verify($this->senha, $usuario['senha'])) {
-            $this->iniciarSessao($usuario);
-        } else {
-            $this->setErroLogin('Senha incorreta.');
-        }
-    }
+    // 2. O CORAÇÃO DA SOLUÇÃO
+    // Este método foi reescrito para criar a sessão com todas as chaves de segurança.
+    private function iniciarSessaoCompleta(array $usuario, string $tipoUsuario) {
+        // Regenera o ID da sessão para máxima segurança contra session fixation.
+        session_regenerate_id(true);
 
-    private function iniciarSessao($usuario) {
-        session_start();
+        // Define a chave principal que estava faltando.
         $_SESSION['usuario_id'] = $usuario['id'];
-        $_SESSION['usuario_nome'] = $usuario['nome'];
-        $_SESSION['tipo_usuario'] = $this->tipoUsuario;
-
-        if ($this->tipoUsuario === 'medico') {
+        
+        // Define as outras chaves que a classe Seguranca vai verificar.
+        $_SESSION['tipo_usuario'] = $tipoUsuario;
+        $_SESSION['user_agent'] = hash('sha256', $_SERVER['HTTP_USER_AGENT'] ?? '');
+        $_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'] ?? '';
+        $_SESSION['last_activity'] = time();
+        
+        // (Opcional) Guarda dados extras que podem ser úteis.
+        $_SESSION['usuario_nome'] = $usuario['nome'] ?? '';
+        if ($tipoUsuario === 'medico') {
             $_SESSION['crm'] = $usuario['crm'];
-        } elseif ($this->tipoUsuario === 'paciente') {
-            $_SESSION['cpf'] = $usuario['cpf'];
         }
 
-        $this->redirecionarDashboard();
-    }
+        // Força a escrita da sessão antes de redirecionar.
+        session_write_close();
 
-    private function redirecionarDashboard() {
-        $dashboard = $this->tipoUsuario === 'medico' ? 'dashboard_medico.php' : 'dashboard_Paciente.php';
-        header("Location: $dashboard");
+        // Redireciona para o dashboard correto.
+        $dashboard = ($tipoUsuario === 'medico') ? 'dashboard_medico.php' : 'dashBoard_Paciente.php';
+        header("Location: " . $dashboard);
         exit();
     }
 
     private function setErroLogin($mensagem) {
-        session_start();
-        $_SESSION['erro_login'] = $mensagem;
-        header('Location: naoacessou.php');
+        $_SESSION['notificacao'] = ['tipo' => 'erro', 'mensagem' => $mensagem];
+        header('Location: index.php'); // Envia o erro de volta para a index, onde está o login.
         exit();
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conexao = new ConexaoBD();
-    $login = new ValidaLogin($conexao);
-    $login->recebeDados($_POST['tipo_usuario'], $_POST['identificador'], $_POST['senha']);
-    $login->validarUsuario();
-} else {
-    session_start();
-    $_SESSION['erro_login'] = 'Acesso inválido.';
-    header('Location: naoacessou.php');
-    exit();
-}
-?>
+// 3. EXECUÇÃO
+// Pega os dados sanitizados.
+$tipo_usuario = $seguranca->sanitizar_entrada($_POST['tipo_usuario']);
+$identificador = $seguranca->sanitizar_entrada($_POST['identificador']);
+$senha = $_POST['senha']; // A senha não é sanitizada para não corromper o hash.
+
+// Instancia e executa a validação.
+$login = new ValidaLogin($conexaoBD, $seguranca);
+$login->validarUsuario($tipo_usuario, $identificador, $senha);
