@@ -168,12 +168,63 @@ unset($_SESSION['notificacao']);
             };
 
             function aplicarMascara(tipo) {
-                if (identificadorMask) identificadorMask.destroy();
-                const config = mascaras[tipo];
-                identificadorMask = IMask(identificadorInput, config);
-                identificadorInput.placeholder = config.placeholder;
-                labelIdentificador.textContent = (tipo === 'medico') ? 'CRM' : 'CPF';
-            }
+    if (identificadorMask) identificadorMask.destroy();
+
+    const config = mascaras[tipo];
+    identificadorMask = IMask(identificadorInput, config);
+    identificadorInput.placeholder = config.placeholder;
+    labelIdentificador.textContent = (tipo === 'medico') ? 'CRM' : 'CPF';
+
+    // Remove o campo UF se já existir (para evitar duplicação)
+    const ufExistente = document.getElementById('uf');
+    if (ufExistente) {
+        ufExistente.remove();
+    }
+
+    if (tipo === 'medico') {
+        const uf_input = document.createElement('select');
+        uf_input.setAttribute('id', 'uf');
+        uf_input.setAttribute('name', 'uf');
+        uf_input.setAttribute('class', 'form-select mt-2');
+        uf_input.setAttribute('required', '');
+        uf_input.innerHTML = `
+            <option value="" disabled selected>Selecione a UF do CRM</option>
+            <option value="AC">AC</option>
+            <option value="AL">AL</option>
+            <option value="AP">AP</option>
+            <option value="AM">AM</option>
+            <option value="BA">BA</option>
+            <option value="CE">CE</option>
+            <option value="DF">DF</option>
+            <option value="ES">ES</option>
+            <option value="GO">GO</option>
+            <option value="MA">MA</option>
+            <option value="MT">MT</option>
+            <option value="MS">MS</option>
+            <option value="MG">MG</option>
+            <option value="PA">PA</option>
+            <option value="PB">PB</option>
+            <option value="PR">PR</option>
+            <option value="PE">PE</option>
+            <option value="PI">PI</option>
+            <option value="RJ">RJ</option>
+            <option value="RN">RN</option>
+            <option value="RS">RS</option>
+            <option value="RO">RO</option>
+            <option value="RR">RR</option>
+            <option value="SC">SC</option>
+            <option value="SP">SP</option>
+            <option value="SE">SE</option>
+            <option value="TO">TO</option>`;
+            
+
+        // Insere o campo UF logo após o campo CRM
+        identificadorInput.parentNode.appendChild(uf_input);
+    } else {
+        identificadorInput.setAttribute('maxlength', '14'); // CPF
+    }
+}
+
 
             tipoUsuarioSelect.addEventListener('change', () => aplicarMascara(tipoUsuarioSelect.value));
             aplicarMascara(tipoUsuarioSelect.value);

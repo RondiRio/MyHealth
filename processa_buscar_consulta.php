@@ -9,51 +9,45 @@ $seguranca->proteger_pagina('medico');
 header('Content-Type: application/json');
 
 try {
-    // Valida se a requisição foi feita usando o método POST.
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception('Método não permitido');
+  if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    throw new Exception('Método não permitido');
     }
-
-    // 2. RECEBER E SANITIZAR O CPF
+// 2. RECEBER E SANITIZAR O CPF
     $cpf = $seguranca->sanitizar_entrada($_POST['cpf'] ?? '');
     if (empty($cpf)) {
         throw new Exception('O CPF é obrigatório para a busca.');
     }
 
-    // 3. NOVA LÓGICA DE BUSCA ALINHADA COM O BANCO DE DADOS ATUAL
-    // A consulta agora busca todos os campos necessários da tabela `consultas`.
-    $sql = "SELECT
-                c.*, -- Pega todas as colunas da tabela de consultas
-                m.nome as nome_medico
-            FROM consultas c
-            JOIN user_medicos m ON c.id_medico = m.id
-            WHERE c.cpf_paciente = ?
-            ORDER BY c.data_consulta DESC";
+    // 3. BUSCA SEPARADA: PRIMEIRO, OS DADOS DO PACIENTE
+    $sqlPaciente = "SELECT nome, cpf, email, telefone FROM user_pacientes WHERE cpf = ?";
+    $stmtPaciente = $conexaoBD->proteger_sql($sqlPaciente, [$cpf]);
+    $resultadoPaciente = $stmtPaciente->get_result();
+    $dadosPaciente = $resultadoPaciente->fetch_assoc();
+    $stmtPaciente->close();
 
-    $stmt = $conexaoBD->proteger_sql($sql, [$cpf]);
-    $resultado = $stmt->get_result();
-    $consultas = $resultado->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
-
-    // 4. PREPARAR E ENVIAR A RESPOSTA JSON CORRETA
-    if (count($consultas) > 0) {
-        // Se encontrou consultas, os dados básicos do paciente (nome e CPF)
-        // são pegos do primeiro registro encontrado.
-        $dadosPaciente = [
-            'nome' => $consultas[0]['nome_paciente'],
-            'cpf' => $consultas[0]['cpf_paciente']
-        ];
-
-        // Envia uma resposta de sucesso com os dados do paciente e a lista de consultas.
-        echo json_encode([
-            'success' => true,
-            'paciente' => $dadosPaciente,
-            'consultas' => $consultas
-        ]);
-    } else {
-        // Se não encontrou nenhuma consulta para o CPF informado.
-        echo json_encode(['success' => false, 'message' => 'Nenhum histórico de consulta encontrado para este CPF.']);
+    if (!$dadosPaciente) {
+        // Se não encontrou o paciente, retorna erro.
+        echo json_encode(['success' => false, 'message' => 'Paciente não encontrado.']);
+        exit;
     }
+
+    // 4. BUSCA SEPARADA: SEGUNDO, AS CONSULTAS DO PACIENTE
+    $sqlConsultas = "SELECT c.*, m.nome as nome_medico FROM consultas c
+                      JOIN user_medicos m ON c.id_medico = m.id
+                      WHERE c.cpf_paciente = ?
+                      ORDER BY c.data_consulta DESC";
+
+    $stmtConsultas = $conexaoBD->proteger_sql($sqlConsultas, [$cpf]);
+    $resultadoConsultas = $stmtConsultas->get_result();
+    $consultas = $resultadoConsultas->fetch_all(MYSQLI_ASSOC);
+    $stmtConsultas->close();
+
+    // 5. PREPARAR E ENVIAR A RESPOSTA JSON FINAL
+    echo json_encode([
+        'success' => true,
+        'paciente' => $dadosPaciente,
+        'consultas' => $consultas
+    ]);
 
 } catch (Exception $e) {
     // Em caso de qualquer erro, captura a exceção e retorna uma resposta de erro em JSON.
@@ -63,3 +57,4 @@ try {
         'error' => $e->getMessage()
     ]);
 }
+?>
