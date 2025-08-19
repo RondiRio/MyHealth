@@ -1,25 +1,55 @@
 <?php
-    class ConexaoBD{
-        private $servername = 'localhost';
-        private $username = 'root';
-        private $password = '';
-        private $database = 'myhealth';
-        public $conn;
+class ConexaoBD {
+    private $servername = 'localhost';
+    private $username = 'root';
+    private $password = '';
+    private $database = 'myhealth';
+    
+    // MUDANÇA 1: De public para private para melhor encapsulamento.
+    private $conn;
 
-        public function __construct(){
-            $this->conectar();
-        }
-
-        private function conectar(){
-            $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database);
-
-            if($this->conn->connect_error){
-                die('Falha ao conectar: '. $this->conn->connect_error);
-            }
-        }
-
-        public function getConexao(){
-            return $this->conn;
-        }
+    public function __construct() {
+        $this->conectar();
     }
+
+    private function conectar() {
+        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database);
+
+        // MUDANÇA 2: Tratamento de erro mais seguro.
+        // Registra o erro detalhado para o desenvolvedor, mas mostra uma mensagem genérica para o usuário.
+        if ($this->conn->connect_error) {
+            error_log('Falha na conexão com o Banco de Dados: ' . $this->conn->connect_error);
+            die('Erro interno do servidor. Por favor, tente novamente mais tarde.');
+        }
+        
+        // Boa prática para garantir a codificação correta.
+        $this->conn->set_charset('utf8mb4');
+    }
+
+    public function getConexao() {
+        return $this->conn;
+    }
+
+    // MUDANÇA 3: Adicionando o método de consultas seguras que criamos.
+    // Agora, toda a lógica de SQL seguro pertence a esta classe.
+    public function proteger_sql($query, $params = []) {
+        $stmt = $this->conn->prepare($query);
+        if ($stmt === false) {
+            error_log('Erro na preparação da query SQL: ' . $this->conn->error);
+            die('Erro interno do servidor.');
+        }
+
+        if ($params) {
+            $types = str_repeat('s', count($params)); // Trata todos como string para simplificar
+            $stmt->bind_param($types, ...$params);
+        }
+
+        if (!$stmt->execute()) {
+            error_log('Erro na execução da query SQL: ' . $stmt->error);
+            die('Erro interno do servidor.');
+        }
+        
+        return $stmt;
+    }
+}
 ?>

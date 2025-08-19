@@ -49,7 +49,7 @@ class Medico {
                     nome = ?, 
                     especialidade = ?, 
                     telefone = ?, 
-                    endereco = ?, 
+                    endereco_medico = ?, 
                     cidade = ?, 
                     estado = ?, 
                     data_nascimento = ?, 

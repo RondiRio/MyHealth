@@ -1,0 +1,461 @@
+:root {
+            --medical-blue: #2c5aa0;
+            --medical-light-blue: #4a7bc8;
+            --medical-teal: #17a2b8;
+            --medical-green: #28a745;
+            --medical-gray: #6c757d;
+            --medical-purple: #6f42c1;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--medical-blue) 0%, var(--medical-light-blue) 100%);
+            color: white;
+            min-height: 100vh;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .logo h3 {
+            color: #fff;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .patient-profile {
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255,255,255,0.2);
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .patient-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .patient-id {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .nav-section {
+            flex: 1;
+            padding: 1.5rem 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border-left-color: #fff;
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            border-left-color: #fff;
+        }
+
+        .nav-link i {
+            width: 20px;
+            margin-right: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .header-section {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--medical-purple), var(--medical-teal), var(--medical-blue));
+        }
+
+        .page-title {
+            color: var(--medical-blue);
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-subtitle {
+            color: var(--medical-gray);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-tabs {
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 2rem;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            color: var(--medical-gray);
+            font-weight: 600;
+            padding: 1rem 2rem;
+            margin: 0;
+            background: transparent;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            transform: none;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background: rgba(44, 90, 160, 0.05);
+            color: var(--medical-blue);
+            border-left: none;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: var(--medical-blue);
+            color: #fff;
+            border-bottom: 3px solid var(--medical-teal);
+            border-left: none;
+        }
+
+        .nav-tabs .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        .tab-content {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .card {
+            border: none;
+            box-shadow: none;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .consultation-accordion .accordion-item {
+            border: 1px solid #e3e6f0;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .consultation-accordion .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+        }
+
+        .accordion-button {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: none;
+            padding: 1.5rem 2rem;
+            font-weight: 600;
+            color: var(--medical-blue);
+            position: relative;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(135deg, var(--medical-blue) 0%, var(--medical-light-blue) 100%);
+            color: #fff;
+            box-shadow: none;
+        }
+
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(44, 90, 160, 0.25);
+        }
+
+        .accordion-button::after {
+            filter: brightness(0) invert(1);
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            filter: brightness(1) invert(1);
+        }
+
+        .consultation-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .consultation-doctor {
+            font-size: 1rem;
+            margin-left: auto;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .accordion-body {
+            padding: 2rem;
+            background: #fff;
+        }
+
+        .medical-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--medical-teal);
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .medical-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .medical-section.diagnosis {
+            border-left-color: var(--medical-purple);
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+        }
+
+        .medical-section.treatment {
+            border-left-color: var(--medical-green);
+            background: linear-gradient(135deg, #f8fff8 0%, #f0fff4 100%);
+        }
+
+        .section-title {
+            color: var(--medical-blue);
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-content {
+            color: #495057;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .document-list {
+            background: #fff;
+        }
+
+        .list-group-item {
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .list-group-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%);
+        }
+
+        .document-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .document-icon.pdf { background: #dc3545; }
+        .document-icon.image { background: var(--medical-green); }
+        .document-icon.doc { background: var(--medical-blue); }
+        .document-icon.default { background: var(--medical-gray); }
+
+        .document-info {
+            flex: 1;
+        }
+
+        .document-title {
+            font-weight: 600;
+            color: var(--medical-blue);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .document-date {
+            color: var(--medical-gray);
+            font-size: 0.9rem;
+        }
+
+        .download-icon {
+            color: var(--medical-teal);
+            font-size: 1.2rem;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover .download-icon {
+            transform: scale(1.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--medical-gray);
+        }
+
+        .empty-state i {
+            font-size: 5rem;
+            color: #dee2e6;
+            margin-bottom: 2rem;
+        }
+
+        .empty-state h5 {
+            color: var(--medical-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .empty-state .lead {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-logout {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            border: none;
+            color: #fff;
+            padding: 1rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 3.71rem 0.01rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+            color: #fff;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .status-badge.online {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--medical-green);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }

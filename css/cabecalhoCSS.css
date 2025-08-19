@@ -56,7 +56,7 @@ nav ul li a:hover {
 }
 
 /* Botão de Login */
-.btn-login {
+/* .btn-login {
     background-color: #32383f;
     color: white;
     padding: 10px 20px;
@@ -64,11 +64,11 @@ nav ul li a:hover {
     border-radius: 5px;
     font-weight: 500;
     transition: background-color 0.3s ease;
-}
+} */
 
-.btn-login:hover {
+/* .btn-login:hover {
     background-color: #005bb5;
-}
+} */
 
 /* Responsividade */
 @media (max-width: 768px) {
@@ -86,7 +86,7 @@ nav ul li a:hover {
         margin-right: 15px;
     }
 
-    .btn-login {
+    /* .btn-login {
         margin-top: 10px;
-    }
+    } */
 }
