@@ -1,8 +1,13 @@
-<?php 
+<?php
+// 1. Carrega o nosso ambiente, que já inicia a sessão correta ('MyHealthSession')
+require_once 'iniciar.php';
 
-// fim da sessao do usuário
-session_unset();
+// 2. Limpa todas as variáveis da sessão
+$_SESSION = array();
+
+// 3. Destrói a sessão atual
 session_destroy();
 
-header('Location: index.php'); // Redireciona para a página de login
-?>
+// 4. Redireciona o utilizador para a página inicial
+header("Location: index.php");
+exit;

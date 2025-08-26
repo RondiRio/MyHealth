@@ -10,6 +10,7 @@ $seguranca->proteger_pagina('medico');
     <title>Prontuário Eletrônico - MediCare</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --medical-blue: #2c5aa0;
@@ -19,6 +20,7 @@ $seguranca->proteger_pagina('medico');
             --medical-gray: #6c757d;
             --medical-purple: #6f42c1;
             --medical-orange: #fd7e14;
+            --danger-red: #dc3545;
             --sidebar-width: 280px;
         }
 
@@ -43,6 +45,8 @@ $seguranca->proteger_pagina('medico');
             box-shadow: 4px 0 15px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
+            position: fixed;
+            z-index: 1000;
         }
 
         .sidebar-header {
@@ -106,7 +110,7 @@ $seguranca->proteger_pagina('medico');
         }
 
         .logout-btn {
-            background: linear-gradient(45deg, #dc3545, #c82333);
+            background: linear-gradient(45deg, var(--danger-red), #c82333);
             border: none;
             color: #fff;
             padding: 1rem;
@@ -128,9 +132,10 @@ $seguranca->proteger_pagina('medico');
         }
 
         .content {
+            margin-left: var(--sidebar-width);
             flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .header-section {
@@ -138,7 +143,8 @@ $seguranca->proteger_pagina('medico');
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
+            margin: 2rem;
+            margin-bottom: 1rem;
             position: relative;
             overflow: hidden;
         }
@@ -169,12 +175,27 @@ $seguranca->proteger_pagina('medico');
             margin-bottom: 1.5rem;
         }
 
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .status-badge.online {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--medical-green);
+        }
+
         .search-section {
             background: #fff;
             padding: 2.5rem;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
+            margin: 0 2rem 2rem 2rem;
             text-align: center;
         }
 
@@ -239,36 +260,122 @@ $seguranca->proteger_pagina('medico');
             color: #fff;
         }
 
-        .prontuario-section {
+        /* PATIENT HEADER - Enhanced from second template */
+        .patient-header {
             background: #fff;
+            padding: 2rem;
+            margin: 0 2rem 2rem 2rem;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: relative;
             overflow: hidden;
         }
 
-        .prontuario-header {
-            background: linear-gradient(135deg, var(--medical-blue), var(--medical-light-blue));
-            color: #fff;
-            padding: 2rem;
+        .patient-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--medical-blue), var(--medical-light-blue));
+        }
+
+        .patient-info-row {
             display: flex;
-            justify-content: between;
             align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
         }
 
-        .paciente-info h2 {
-            margin: 0 0 0.5rem 0;
+        .patient-basic-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .patient-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--medical-blue);
+            background: var(--medical-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .patient-details h2 {
+            color: var(--medical-blue);
             font-weight: 700;
-            font-size: 1.8rem;
+            margin-bottom: 0.25rem;
         }
 
-        .paciente-info span {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .patient-meta {
+            color: var(--medical-gray);
+            font-size: 0.95rem;
+        }
+
+        .critical-alerts {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .alert-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .alert-section h6 {
+            margin: 0;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--medical-gray);
+        }
+
+        .alert-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .alert-tag {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .alert-tag.drug-allergy {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger-red);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .alert-tag.chronic-disease {
+            background: rgba(255, 193, 7, 0.1);
+            color: #856404;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .alert-tag.none {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--medical-green);
+            border: 1px solid rgba(40, 167, 69, 0.3);
         }
 
         .btn-nova-consulta {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.3);
+            background: linear-gradient(135deg, var(--medical-blue), var(--medical-light-blue));
+            border: none;
             color: #fff;
             padding: 0.75rem 1.5rem;
             border-radius: 10px;
@@ -278,43 +385,170 @@ $seguranca->proteger_pagina('medico');
         }
 
         .btn-nova-consulta:hover {
-            background: rgba(255,255,255,0.3);
-            color: #fff;
             transform: translateY(-2px);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(44, 90, 160, 0.3);
+        }
+
+        /* TAB NAVIGATION */
+        .main-content {
+            flex: 1;
+            padding: 0 2rem 2rem 2rem;
+            overflow-y: auto;
         }
 
         .nav-tabs {
-            background: #f8f9fa;
-            border-bottom: none;
-            padding: 0 2rem;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 2rem;
+            background: none;
+            padding: 0;
         }
 
         .nav-tabs .nav-link {
             border: none;
             color: var(--medical-gray);
             font-weight: 600;
-            padding: 1.5rem 2rem;
+            padding: 1rem 2rem;
+            border-radius: 10px 10px 0 0;
+            margin-right: 0.5rem;
+            background: transparent;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .nav-tabs .nav-link:hover {
-            border: none;
-            background: transparent;
+            background: rgba(44, 90, 160, 0.1);
             color: var(--medical-blue);
         }
 
         .nav-tabs .nav-link.active {
-            background: transparent;
-            color: var(--medical-blue);
-            border: none;
-            border-bottom: 3px solid var(--medical-blue);
+            background: var(--medical-blue);
+            color: #fff;
+            border-bottom-color: var(--medical-blue);
         }
 
         .tab-content {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .tab-pane {
             padding: 2rem;
         }
 
+        /* WIDGETS */
+        .widget {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .widget:last-child {
+            margin-bottom: 0;
+        }
+
+        .widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .widget-title {
+            color: var(--medical-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 1rem;
+        }
+
+        .chart-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .chart-filter {
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            background: #fff;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chart-filter.active,
+        .chart-filter:hover {
+            background: var(--medical-blue);
+            color: #fff;
+            border-color: var(--medical-blue);
+        }
+
+        .activity-feed {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--medical-teal);
+        }
+
+        .activity-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--medical-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: var(--medical-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-description {
+            color: var(--medical-gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--medical-gray);
+        }
+
+        /* ACCORDION STYLES */
         .accordion-item {
             border: none;
             margin-bottom: 1rem;
@@ -343,13 +577,21 @@ $seguranca->proteger_pagina('medico');
             padding: 2rem;
         }
 
+        /* DOCUMENT CARDS */
+        .document-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
         .document-card {
             background: #fff;
-            border-radius: 12px;
-            padding: 2rem;
+            border-radius: 10px;
+            padding: 1rem;
             text-align: center;
+            border: 1px solid #dee2e6;
             transition: all 0.3s ease;
-            border: 2px solid #f8f9fa;
+            cursor: pointer;
             text-decoration: none;
             color: var(--medical-gray);
             display: block;
@@ -364,15 +606,28 @@ $seguranca->proteger_pagina('medico');
             text-decoration: none;
         }
 
-        .document-card i {
+        .document-icon {
+            font-size: 3rem;
             color: var(--medical-teal);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        .document-card:hover i {
+        .document-card:hover .document-icon {
             color: var(--medical-blue);
         }
 
+        .document-name {
+            font-weight: 600;
+            color: var(--medical-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .document-date {
+            font-size: 0.8rem;
+            color: var(--medical-gray);
+        }
+
+        /* PATIENT DATA STYLES */
         .card-body-dados {
             background: linear-gradient(135deg, #f8f9fa, #ffffff);
             padding: 2rem;
@@ -402,6 +657,7 @@ $seguranca->proteger_pagina('medico');
             font-weight: 500;
         }
 
+        /* ALERT STYLES */
         .alert-custom {
             border-radius: 12px;
             border: none;
@@ -428,11 +684,46 @@ $seguranca->proteger_pagina('medico');
 
         @media (max-width: 768px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; min-height: auto; }
-            .content { padding: 1rem; }
-            .prontuario-header { flex-direction: column; gap: 1rem; text-align: center; }
+            .sidebar { 
+                width: 100%; 
+                min-height: auto; 
+                position: relative;
+            }
+            .content { 
+                margin-left: 0;
+                padding: 1rem; 
+            }
+            .patient-info-row { 
+                flex-direction: column; 
+                gap: 1rem; 
+                text-align: center; 
+            }
             .nav-tabs .nav-link { padding: 1rem; }
+            .header-section,
+            .search-section,
+            .patient-header,
+            .main-content {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
         }
+        .consulta-section {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #ddd;
+}
+.consulta-section:last-child {
+    border-bottom: none;
+}
+.consulta-section h6 {
+    font-weight: 600;
+    color: #495057;
+}
+.consulta-section p {
+    margin: 0.25rem 0 0;
+    white-space: pre-line; /* Mantém quebras de linha na anamnese/exame */
+}
+
     </style>
 </head>
 <body>
@@ -522,12 +813,26 @@ $seguranca->proteger_pagina('medico');
 
         <!-- ETAPA 2: EXIBIÇÃO DO PRONTUÁRIO (inicialmente oculto) -->
         <div id="prontuario-container" class="d-none">
-            <div class="prontuario-section">
-                <div class="prontuario-header">
-                    <div class="paciente-info">
-                        <h2 id="paciente-nome"></h2>
-                        <span id="paciente-info"></span>
+            <!-- Patient Header (Enhanced) -->
+            <div class="patient-header">
+                <div class="patient-info-row">
+                    <div class="patient-basic-info">
+                        <div class="patient-avatar" id="patient-avatar-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="patient-details">
+                            <h2 id="paciente-nome"></h2>
+                            <div class="patient-meta">
+                                <span id="paciente-info"></span><br>
+                                <span id="paciente-contato"></span>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="critical-alerts" id="critical-alerts-section">
+                        <!-- Alerts will be populated dynamically -->
+                    </div>
+
                     <div>
                         <a href="consulta.php" class="btn-nova-consulta">
                             <i class="fas fa-plus me-2"></i> 
@@ -535,10 +840,19 @@ $seguranca->proteger_pagina('medico');
                         </a>
                     </div>
                 </div>
+            </div>
 
+            <!-- Enhanced Tabbed Content -->
+            <div class="main-content">
                 <ul class="nav nav-tabs" id="prontuarioTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Visão Geral
+                        </button>
+                    </li>
                     <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#consultas">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#consultas">
                             <i class="fas fa-stethoscope me-2"></i>
                             Consultas
                         </button>
@@ -558,14 +872,70 @@ $seguranca->proteger_pagina('medico');
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="consultas">
+                    <!-- Overview Tab (New) -->
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                        <!-- Evolution Charts Widget -->
+                        <div class="widget">
+                            <div class="widget-header">
+                                <h3 class="widget-title">
+                                    <i class="fas fa-chart-line"></i>
+                                    Evolução dos Sinais Vitais
+                                </h3>
+                                <div class="chart-filters">
+                                    <button class="chart-filter active" onclick="changeChartPeriod('30d')">30 dias</button>
+                                    <button class="chart-filter" onclick="changeChartPeriod('6m')">6 meses</button>
+                                    <button class="chart-filter" onclick="changeChartPeriod('1y')">1 ano</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="vitalSignsChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Recent Activities Widget -->
+                                <div class="widget">
+                                    <div class="widget-header">
+                                        <h3 class="widget-title">
+                                            <i class="fas fa-activity"></i>
+                                            Atividades Recentes
+                                        </h3>
+                                    </div>
+                                    <div class="activity-feed" id="recent-activities">
+                                        <!-- Activities will be populated dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <!-- Current Medications Widget -->
+                                <div class="widget">
+                                    <div class="widget-header">
+                                        <h3 class="widget-title">
+                                            <i class="fas fa-prescription-bottle-alt"></i>
+                                            Medicamentos Atuais
+                                        </h3>
+                                    </div>
+                                    <div id="current-medications">
+                                        <!-- Medications will be populated dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consultas Tab -->
+                    <div class="tab-pane fade" id="consultas">
                         <div class="accordion" id="accordionConsultas"></div>
                     </div>
                     
+                    <!-- Documentos Tab -->
                     <div class="tab-pane fade" id="documentos">
                         <div id="lista-documentos" class="row g-4"></div>
                     </div>
                     
+                    <!-- Dados Pessoais Tab -->
                     <div class="tab-pane fade" id="dados-pessoais">
                         <div class="card-body-dados">
                             <div id="dados-paciente-detalhes"></div>
@@ -575,6 +945,7 @@ $seguranca->proteger_pagina('medico');
             </div>
         </div>
     </div>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/imask"></script>
@@ -651,73 +1022,141 @@ $seguranca->proteger_pagina('medico');
             function preencherProntuario(data) {
                 const escapeHTML = (str) => !str ? '' : str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
                 
-                // Cabeçalho do prontuário
+                // Cabeçalho do prontuário aprimorado
                 document.getElementById('paciente-nome').textContent = escapeHTML(data.paciente.nome);
+                
                 let infoExtra = '';
+                let contatoExtra = '';
                 if (data.paciente.data_nascimento) {
                     const idade = new Date().getFullYear() - new Date(data.paciente.data_nascimento).getFullYear();
-                    infoExtra = `${idade} anos • CPF: ${escapeHTML(data.paciente.cpf)}`;
+                    infoExtra = `${idade} anos • ${escapeHTML(data.paciente.genero) || 'N/I'} • CPF: ${escapeHTML(data.paciente.cpf)}`;
                 }
+                
+                if (data.paciente.email || data.paciente.telefone) {
+                    contatoExtra = `
+                        ${data.paciente.email ? `<i class="fas fa-envelope me-1"></i>${escapeHTML(data.paciente.email)}` : ''}
+                        ${data.paciente.telefone ? `<span class="ms-3"><i class="fas fa-phone me-1"></i>${escapeHTML(data.paciente.telefone)}</span>` : ''}
+                    `;
+                }
+                
                 document.getElementById('paciente-info').textContent = infoExtra;
+                document.getElementById('paciente-contato').innerHTML = contatoExtra;
+
+                // Alertas críticos (simulados - você pode implementar com dados reais)
+                const alertsSection = document.getElementById('critical-alerts-section');
+                alertsSection.innerHTML = `
+                    <div class="alert-section">
+                        <h6>Alergias Medicamentosas</h6>
+                        <div class="alert-tags">
+                            <span class="alert-tag none">
+                                <i class="fas fa-check"></i>
+                                NENHUMA REGISTRADA
+                            </span>
+                        </div>
+                    </div>
+                    <div class="alert-section">
+                        <h6>Doenças Crônicas</h6>
+                        <div class="alert-tags">
+                            <span class="alert-tag none">
+                                <i class="fas fa-check"></i>
+                                NENHUMA REGISTRADA
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                // Aba de Visão Geral - Atividades Recentes
+                const recentActivities = document.getElementById('recent-activities');
+                recentActivities.innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Última Consulta</div>
+                            <div class="activity-description">${data.consultas && data.consultas.length > 0 ? escapeHTML(data.consultas[0].diagnostico_final) || 'Consulta realizada' : 'Nenhuma consulta registrada'}</div>
+                            <div class="activity-time">${data.consultas && data.consultas.length > 0 ? new Date(data.consultas[0].data_consulta).toLocaleDateString('pt-BR') : 'N/A'}</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Documentos</div>
+                            <div class="activity-description">${data.documentos ? data.documentos.length : 0} documento(s) no prontuário</div>
+                            <div class="activity-time">Atualizado hoje</div>
+                        </div>
+                    </div>
+                `;
+
+                // Medicamentos atuais (simulado)
+                const currentMedications = document.getElementById('current-medications');
+                currentMedications.innerHTML = `
+                    <div class="alert alert-info-custom alert-custom">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Nenhuma prescrição ativa encontrada. Use a aba "Consultas" para visualizar tratamentos prescritos.
+                    </div>
+                `;
 
                 // Aba de Consultas
                 const accordionConsultas = document.getElementById('accordionConsultas');
                 if (data.consultas && data.consultas.length > 0) {
-                    accordionConsultas.innerHTML = data.consultas.map((c, i) => `
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button ${i > 0 ? 'collapsed' : ''}" type="button" data-bs-toggle="collapse" data-bs-target="#c-${c.id_consulta}" aria-expanded="${i === 0}">
-                                    <i class="fas fa-calendar-check me-3"></i>
-                                    ${new Date(c.data_consulta).toLocaleDateString('pt-BR')} - ${escapeHTML(c.diagnostico_final) || 'Consulta de rotina'}
-                                </button>
-                            </h2>
-                            <div id="c-${c.id_consulta}" class="accordion-collapse collapse ${i === 0 ? 'show' : ''}" data-bs-parent="#accordionConsultas">
-                                <div class="accordion-body">
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <div class="dados-row">
-                                                <span class="dados-label"><i class="fas fa-user-md me-2"></i>Médico:</span>
-                                                <span class="dados-value">Dr. ${escapeHTML(c.nome_medico)}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="dados-row">
-                                                <span class="dados-label"><i class="fas fa-stethoscope me-2"></i>Especialidade:</span>
-                                                <span class="dados-value">${escapeHTML(c.especialidade) || 'N/A'}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="dados-row">
-                                                <span class="dados-label"><i class="fas fa-clipboard-list me-2"></i>Anamnese:</span>
-                                                <span class="dados-value">${escapeHTML(c.anamnese) || 'Não informado'}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="dados-row">
-                                                <span class="dados-label"><i class="fas fa-search me-2"></i>Exame Físico:</span>
-                                                <span class="dados-value">${escapeHTML(c.exame_fisico) || 'Não realizado'}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="dados-row">
-                                                <span class="dados-label"><i class="fas fa-diagnoses me-2"></i>Diagnóstico:</span>
-                                                <span class="dados-value">${escapeHTML(c.diagnostico_final) || 'Não informado'}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="dados-row">
-                                                <span class="dados-label"><i class="fas fa-pills me-2"></i>Tratamento:</span>
-                                                <span class="dados-value">${escapeHTML(c.tratamento_proposto) || 'Não prescrito'}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('');
-                } else {
-                    accordionConsultas.innerHTML = '<div class="alert alert-info-custom alert-custom"><i class="fas fa-info-circle me-2"></i>Nenhum registro de consulta encontrado para este paciente.</div>';
-                }
+    accordionConsultas.innerHTML = data.consultas.map((c, i) => `
+        <div class="accordion-item mb-3">
+            <h2 class="accordion-header">
+                <button class="accordion-button ${i > 0 ? 'collapsed' : ''}" 
+                        type="button" 
+                        data-bs-toggle="collapse" 
+                        data-bs-target="#c-${c.id_consulta}" 
+                        aria-expanded="${i === 0}">
+                    <i class="fas fa-calendar-check me-3"></i>
+                    ${new Date(c.data_consulta).toLocaleDateString('pt-BR')} - ${escapeHTML(c.diagnostico_final) || 'Consulta de rotina'}
+                </button>
+            </h2>
+            <div id="c-${c.id_consulta}" 
+                 class="accordion-collapse collapse ${i === 0 ? 'show' : ''}" 
+                 data-bs-parent="#accordionConsultas">
+                <div class="accordion-body">
+                    
+                    <div class="consulta-section">
+                        <h6><i class="fas fa-user-md me-2"></i>Médico</h6>
+                        <p>Dr. ${escapeHTML(c.nome_medico)}</p>
+                    </div>
+
+                    <div class="consulta-section">
+                        <h6><i class="fas fa-stethoscope me-2"></i>Especialidade</h6>
+                        <p>${escapeHTML(c.especialidade) || 'N/A'}</p>
+                    </div>
+
+                    <div class="consulta-section">
+                        <h6><i class="fas fa-clipboard-list me-2"></i>Anamnese</h6>
+                        <p>${escapeHTML(c.anamnese) || 'Não informado'}</p>
+                    </div>
+
+                    <div class="consulta-section">
+                        <h6><i class="fas fa-search me-2"></i>Exame Físico</h6>
+                        <p>${escapeHTML(c.exame_fisico) || 'Não realizado'}</p>
+                    </div>
+
+                    <div class="consulta-section">
+                        <h6><i class="fas fa-diagnoses me-2"></i>Diagnóstico</h6>
+                        <p>${escapeHTML(c.diagnostico_final) || 'Não informado'}</p>
+                    </div>
+
+                    <div class="consulta-section">
+                        <h6><i class="fas fa-pills me-2"></i>Tratamento</h6>
+                        <p>${escapeHTML(c.tratamento_proposto) || 'Não prescrito'}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    `).join('');
+} else {
+    accordionConsultas.innerHTML = '<div class="alert alert-info-custom alert-custom"><i class="fas fa-info-circle me-2"></i>Nenhum registro de consulta encontrado para este paciente.</div>';
+}
+
 
                 // Aba de Documentos
                 const listaDocumentos = document.getElementById('lista-documentos');
@@ -725,9 +1164,11 @@ $seguranca->proteger_pagina('medico');
                     listaDocumentos.innerHTML = data.documentos.map(d => `
                         <div class="col-md-4 col-lg-3">
                             <a href="uploads/documentos_pacientes/${escapeHTML(d.nome_arquivo)}" target="_blank" class="document-card">
-                                <i class="fas fa-file-medical fa-3x"></i>
-                                <h6 class="mt-2 mb-0">${escapeHTML(d.titulo_documento)}</h6>
-                                <small class="text-muted">${escapeHTML(d.tipo_documento) || 'Documento'}</small>
+                                <div class="document-icon">
+                                    <i class="fas fa-file-medical"></i>
+                                </div>
+                                <div class="document-name">${escapeHTML(d.titulo_documento)}</div>
+                                <div class="document-date">${escapeHTML(d.tipo_documento) || 'Documento'}</div>
                             </a>
                         </div>
                     `).join('');
@@ -775,6 +1216,9 @@ $seguranca->proteger_pagina('medico');
                         <span class="dados-value">${escapeHTML(data.paciente.estado) || 'Não informado'}</span>
                     </div>
                 `;
+
+                // Inicializar gráfico de sinais vitais (simulado)
+                initializeVitalSignsChart();
             }
 
             // Função para voltar à busca
@@ -797,28 +1241,60 @@ $seguranca->proteger_pagina('medico');
                 document.getElementById('cpf_busca').value = '';
                 buscaFeedback.innerHTML = '';
             };
-        });
 
-        // Adicionar classe de status badge
-        document.addEventListener('DOMContentLoaded', function() {
-            const style = document.createElement('style');
-            style.textContent = `
-                .status-badge {
-                    padding: 0.5rem 1rem;
-                    border-radius: 20px;
-                    font-size: 0.85rem;
-                    font-weight: 600;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.25rem;
+            // Inicializar gráfico de sinais vitais
+            function initializeVitalSignsChart() {
+                const ctx = document.getElementById('vitalSignsChart');
+                if (ctx) {
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                            datasets: [{
+                                label: 'Pressão Sistólica',
+                                data: [120, 125, 118, 130, 122, 128],
+                                borderColor: 'rgb(44, 90, 160)',
+                                backgroundColor: 'rgba(44, 90, 160, 0.1)',
+                                tension: 0.4
+                            }, {
+                                label: 'Pressão Diastólica',
+                                data: [80, 82, 78, 85, 81, 84],
+                                borderColor: 'rgb(23, 162, 184)',
+                                backgroundColor: 'rgba(23, 162, 184, 0.1)',
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Evolução da Pressão Arterial'
+                                },
+                                legend: {
+                                    position: 'top'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: false,
+                                    min: 60,
+                                    max: 150
+                                }
+                            }
+                        }
+                    });
                 }
+            }
 
-                .status-badge.online {
-                    background: rgba(40, 167, 69, 0.1);
-                    color: var(--medical-green);
-                }
-            `;
-            document.head.appendChild(style);
+            // Função para alterar período do gráfico
+            window.changeChartPeriod = function(period) {
+                document.querySelectorAll('.chart-filter').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+                // Aqui você pode implementar a lógica para alterar os dados do gráfico
+                console.log('Período alterado para:', period);
+            };
         });
     </script>
 </body>
