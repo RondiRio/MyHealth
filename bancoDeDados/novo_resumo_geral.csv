@@ -1,0 +1,12 @@
+Pergunta,Tipo,n,Categoria + freq,Freq_abs,Freq_rel(%),IC95%_low,IC95%_up,Média,Mediana,Proporção 4-5
+Carimbo de data/hora,Categórica,7,2025/07/01 11:38:29 AM GMT-3,1.0,14.3,2.6,51.3,0.0,0.0,0.0
+Nome:,Categórica,6,Fellipe Machado Portela,1.0,16.7,3.0,56.4,0.0,0.0,0.0
+Qual é a sua profissão?,Categórica,7,Médico,7.0,100.0,64.6,100.0,0.0,0.0,0.0
+Em qual setor você atua com mais frequência?,Categórica,7,Ambulatório / Consultório,4.0,57.1,25.0,84.2,0.0,0.0,0.0
+Há quanto tempo você atua na área da saúde?,Categórica,7,1 a 5 anos,4.0,57.1,25.0,84.2,0.0,0.0,0.0
+"Com que frequência você atende pacientes cujo acompanhante, familiar ou o próprio paciente NÃO sabe informar dados cruciais de saúde (alergias, doenças crônicas, medicamentos em uso)?",Categórica,7,Quase sempre,2.0,28.6,8.2,64.1,0.0,0.0,0.0
+"Na sua experiência, qual tipo de informação os acompanhantes MAIS desconhecem? (Escolha a principal)",Categórica,7,A lista completa de medicamentos que o paciente usa,5.0,71.4,35.9,91.8,0.0,0.0,0.0
+"Em uma escala de 1 a 5, o quanto essa falta de informação pelo acompanhante impacta negativamente a segurança do paciente?",Likert/Númerica,7,,0.0,0.0,64.6,100.0,4.571428571428571,5.0,100.0
+Qual o principal reflexo negativo dessa falta de informação no seu trabalho diário?,Categórica,7,Aumento do risco de erros de medicação,5.0,71.4,35.9,91.8,0.0,0.0,0.0
+Qual iniciativa você acredita que seria MAIS eficaz para que os acompanhantes chegassem ao hospital mais bem informados?,Categórica,7,"Incentivar o paciente a ter um ""cartão de emergência"" na carteira",3.0,42.9,15.8,75.0,0.0,0.0,0.0
+Gostaria de deixar algum comentário ou sugestão adicional sobre o tema?,Categórica,1,"No mundo ideal, todo paciente deveria apresentar um resumo clinico / histórico clinico assim como um corpo de anamnese completa e bem detalhada para ajudar no tratamento futuro e diminuir assim o tempo de internacao hospitalar.",1.0,100.0,20.7,100.0,0.0,0.0,0.0

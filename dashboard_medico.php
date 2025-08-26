@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <?php
-    include('bancoDeDados/sql/conexaoBD.php');
-    session_start();
+    // include('bancoDeDados/sql/conexaoBD.php');
+    include_once('iniciar.php');
+    // session_start();
     $conexao = new ConexaoBD();
     $conn = $conexao->getConexao();
 
@@ -193,7 +194,8 @@
 
         .content {
             flex: 1;
-            padding: 2rem;
+            padding: 1rem;
+            padding-left: .9rem;
             overflow-y: auto;
         }
 
@@ -535,10 +537,10 @@
     </div>
 
     <!-- Main Content -->
-    <div class="content">
+    <div class="content container-fluid">
         <!-- Header Section -->
-        <div class="header-section">
-            <h1 class="page-title">
+        <div class="header-section mx-auto" >
+            <h1 class="page-title text-center">
                 <i class="fas fa-stethoscope"></i>
                 Bem-vindo, Dr. <?php echo htmlspecialchars($dadosMedico['nome']); ?>
             </h1>
@@ -591,7 +593,7 @@
         <div class="main-cards">
             <!-- Doctor Info Card -->
             <div class="info-card">
-                <div class="card-header">
+                <div class="card-header" style="max-width: 12000px;">
                     <i class="fas fa-user-md"></i>
                     Suas Informações Profissionais
                 </div>
@@ -622,212 +624,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Patient Search Card -->
-            <div class="search-card">
-                <div class="card-header">
-                    <i class="fas fa-search"></i>
-                    Consultar Histórico do Paciente
-                </div>
-                <div class="card-body">
-                    <form id="buscarPaciente" class="search-form" method="post" >
-                        <label for="cpf" class="form-label">Buscar Paciente por CPF:</label>
-                        <input type="text" id="cpf" name="cpf" class="form-control mb-3" placeholder="Digite o CPF do paciente" required>
-                        <button type="submit" class="btn-search">
-                            <i class="fas fa-search me-2"></i>
-                            Buscar Consultas
-                        </button>
-                    </form>
-
-                    <div id="resultadoBusca" class="d-none">
-                        <div id="dadosPaciente" class="patient-result">
-                            <div class="patient-header">
-                                <i class="fas fa-user"></i>
-                                Dados do Paciente
-                            </div>
-                            <div class="patient-info">
-                                <div class="patient-field">
-                                    <strong>Nome:</strong>
-                                    <span id="nomePaciente"></span>
-                                </div>
-                                <div class="patient-field">
-                                    <strong>CPF:</strong>
-                                    <span id="cpfPaciente"></span>
-                                </div>
-                                <div class="patient-field">
-                                    <strong>Email:</strong>
-                                    <span id="emailPaciente"></span>
-                                </div>
-                                <div class="patient-field">
-                                    <strong>Telefone:</strong>
-                                    <span id="telefonePaciente"></span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="consultasPaciente">
-                            <h5 class="mb-3" style="color: var(--medical-blue); font-weight: 700;">
-                                <i class="fas fa-history me-2"></i>
-                                Histórico de Consultas
-                            </h5>
-                            <div id="listaConsultas"></div>
-                        </div>
-                    </div>
-
-                    <div id="pacienteNaoEncontrado" class="d-none">
-                        <div class="alert alert-no-patient" role="alert">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            <strong>Paciente não encontrado!</strong> Este CPF não está registrado na base de dados.
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Simulação de dados de atendimentos
-        document.getElementById('atendimentos-dia').textContent = 5;
-        document.getElementById('atendimentos-mes').textContent = 42;
-        document.getElementById('atendimentos-ano').textContent = 320;
-
-        // Função para buscar consultas do paciente
-        document.getElementById('buscarPaciente').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const cpf = document.getElementById('cpf').value.trim();
-            
-            // Ocultar resultados anteriores
-            document.getElementById('resultadoBusca').classList.add('d-none');
-            document.getElementById('pacienteNaoEncontrado').classList.add('d-none');
-
-            // Mostrar loading
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            const originalHTML = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Buscando...';
-            submitBtn.disabled = true;
-
-            // Fazer requisição AJAX para buscar o paciente e suas consultas
-            fetch('processa_buscar_consulta.php', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: new URLSearchParams({cpf: cpf})
-            })
-            .then(response => {
-                console.log('Response status:', response.status);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                return response.text();
-            })
-            .then(text => {
-                console.log('Response text:', text);
-                
-                try {
-                    const data = JSON.parse(text);
-                    console.log('Parsed data:', data);
-
-                    if (data.success) {
-                        // Paciente encontrado - mostrar dados
-                        document.getElementById('nomePaciente').textContent = data.paciente.nome;
-                        document.getElementById('cpfPaciente').textContent = data.paciente.cpf;
-                        document.getElementById('emailPaciente').textContent = data.paciente.email || 'Não informado';
-                        document.getElementById('telefonePaciente').textContent = data.paciente.telefone || 'Não informado';
-
-                        // Mostrar consultas
-                        const listaConsultas = document.getElementById('listaConsultas');
-                        if (data.consultas && data.consultas.length > 0) {
-                            listaConsultas.innerHTML = '';
-                            data.consultas.forEach(consulta => {
-                                const consultaDiv = document.createElement('div');
-                                consultaDiv.className = 'consultation-item';
-                                consultaDiv.innerHTML = `
-                                    <div class="consultation-header">
-                                        <i class="fas fa-calendar-check"></i>
-                                        Consulta - ${formatarData(consulta.data_consulta)}
-                                    </div>
-                                    <div class="consultation-details">
-                                        <div class="consultation-field">
-                                            <strong>Especialidade:</strong>
-                                            <span>${consulta.especialidade}</span>
-                                        </div>
-                                        <div class="consultation-field">
-                                            <strong>Status:</strong>
-                                            <span>${consulta.status_consulta}</span>
-                                        </div>
-                                        <div class="consultation-field">
-                                            <strong>Anamnese:</strong>
-                                            <span>${consulta.anamnese}</span>
-                                        </div>
-                                        <div class="consultation-field">
-                                            <strong>Exame Físico:</strong>
-                                            <span>${consulta.exame_fisico}</span>
-                                        </div>
-                                        <div class="consultation-field">
-                                            <strong>Diagnóstico Final:</strong>
-                                            <span>${consulta.diagnostico_final}</span>
-                                        </div>
-                                        <div class="consultation-field">
-                                            <strong>Tratamento Proposto:</strong>
-                                            <span>${consulta.tratamento_proposto}</span>
-                                        </div>
-                                        <div class="consultation-field">
-                                            <strong>Visível para paciente:</strong>
-                                            <span>${consulta.visivel_para_paciente == 1 ? 'Sim' : 'Não'}</span>
-                                        </div>
-                                    </div>
-                                `;
-                                listaConsultas.appendChild(consultaDiv);
-                            });
-                        } else {
-                            listaConsultas.innerHTML = '<div class="alert alert-info">Nenhuma consulta encontrada para este paciente.</div>';
-                        }
-
-                        document.getElementById('resultadoBusca').classList.remove('d-none');
-                    } else {
-                        // Paciente não encontrado
-                        document.getElementById('pacienteNaoEncontrado').classList.remove('d-none');
-                    }
-                } catch (parseError) {
-                    console.error('Erro ao fazer parse do JSON:', parseError);
-                    console.error('Texto recebido:', text);
-                    alert('Erro: Resposta inválida do servidor. Verifique o console para mais detalhes.');
-                }
-            })
-            .catch(error => {
-                console.error('Erro completo:', error);
-                alert('Erro ao buscar dados do paciente: ' + error.message + '. Verifique o console para mais detalhes.');
-            })
-            .finally(() => {
-                // Restaurar botão
-                submitBtn.innerHTML = originalHTML;
-                submitBtn.disabled = false;
-            });
-        });
-
-        // Função para formatar data
-        function formatarData(dataString) {
-            if (!dataString) return '';
-            const data = new Date(dataString);
-            if (isNaN(data.getTime())) return dataString;
-            return data.toLocaleDateString('pt-BR');
-        }
-
-        // Animações suaves para os cards
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.metric-card, .info-card, .search-card');
-            
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 150);
-            });
-        });

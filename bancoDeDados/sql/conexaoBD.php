@@ -35,8 +35,9 @@ class ConexaoBD {
     public function proteger_sql($query, $params = []) {
         $stmt = $this->conn->prepare($query);
         if ($stmt === false) {
-            error_log('Erro na preparação da query SQL: ' . $this->conn->error);
-            die('Erro interno do servidor.');
+            $error_SQL = error_log('Erro na preparação da query SQL: ' . $this->conn->error);
+            throw new mysqli_sql_exception($error_SQL);
+            // die('Erro interno do servidor.');
         }
 
         if ($params) {
@@ -45,8 +46,9 @@ class ConexaoBD {
         }
 
         if (!$stmt->execute()) {
-            error_log('Erro na execução da query SQL: ' . $stmt->error);
-            die('Erro interno do servidor.');
+            $error_SQL = error_log('Erro na execução da query SQL: ' . $stmt->error);
+            throw new mysqli_sql_exception($error_SQL);
+            // die('Erro interno do servidor.');
         }
         
         return $stmt;
