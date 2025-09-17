@@ -374,7 +374,7 @@ unset($_SESSION['notificacao']);
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
                     <div class="card health-tip-card h-100">
-                        <img src="images/Alimentação saudável.jpg" class="card-img-top" alt="Alimentação Saudável">
+                        <img src="../images/Alimentação saudável.jpg" class="card-img-top" alt="Alimentação Saudável">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">
                                 <i class="fas fa-apple-alt text-success me-2"></i>Alimentação Saudável
@@ -388,7 +388,7 @@ unset($_SESSION['notificacao']);
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="card health-tip-card h-100">
-                        <img src="images/Exercicios fisicos.jpg" class="card-img-top" alt="Exercícios Físicos">
+                        <img src="../images/Exercicios fisicos.jpg" class="card-img-top" alt="Exercícios Físicos">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">
                                 <i class="fas fa-dumbbell text-primary me-2"></i>Exercícios Físicos
@@ -402,7 +402,7 @@ unset($_SESSION['notificacao']);
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="card health-tip-card h-100">
-                        <img src="images/Saude mental.jpg" class="card-img-top" alt="Saúde Mental">
+                        <img src="../images/Saude mental.jpg" class="card-img-top" alt="Saúde Mental">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">
                                 <i class="fas fa-brain text-info me-2"></i>Saúde Mental
@@ -470,21 +470,21 @@ unset($_SESSION['notificacao']);
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="images/Prontuário Digital.jpg" class="d-block w-100" alt="Prontuário Digital">
+                        <img src="../images/Prontuário Digital.jpg" class="d-block w-100" alt="Prontuário Digital">
                         <div class="carousel-caption">
                             <h5><i class="fas fa-file-medical me-2"></i>Prontuário Digital Unificado</h5>
                             <p>Acesse e atualize o histórico completo do paciente em tempo real, de qualquer lugar.</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="images/Lembretes de Consultas.jpg" class="d-block w-100" alt="Lembretes de Consultas">
+                        <img src="../images/Lembretes de Consultas.jpg" class="d-block w-100" alt="Lembretes de Consultas">
                         <div class="carousel-caption">
                             <h5><i class="fas fa-calendar-alt me-2"></i>Agendamento e Lembretes Inteligentes</h5>
                             <p>Nunca mais esqueça uma consulta. Nosso sistema notifica médicos e pacientes automaticamente.</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="images/Comunicação segura.jpg" class="d-block w-100" alt="Comunicação Segura">
+                        <img src="../images/Comunicação segura.jpg" class="d-block w-100" alt="Comunicação Segura">
                         <div class="carousel-caption">
                             <h5><i class="fas fa-shield-alt me-2"></i>Comunicação Segura e Direta</h5>
                             <p>Um canal de mensagens criptografado para uma comunicação eficiente e sigilosa entre médico e paciente.</p>
@@ -507,7 +507,7 @@ unset($_SESSION['notificacao']);
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <h5 class="fw-bold mb-3">
-                        <img src="images/logo.jpg" alt="MyHealth" width="40" height="40" class="rounded me-2">
+                        <img src="../images/logo.jpg" alt="MyHealth" width="40" height="40" class="rounded me-2">
                         MyHealth
                     </h5>
                     <p class="mb-3">Conectando saúde, cuidando de vidas. Sua plataforma de saúde preventiva.</p>

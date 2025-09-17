@@ -289,6 +289,45 @@ require_once '../controller/iniciar.php';
             color: white;
         }
 
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .footer .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
         /* Buttons */
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
@@ -302,6 +341,16 @@ require_once '../controller/iniciar.php';
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Placeholder Images */
+        .team-placeholder {
+            background: linear-gradient(45deg, #f1f5f9, #e2e8f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 3rem;
         }
 
         /* Animations */
@@ -318,11 +367,6 @@ require_once '../controller/iniciar.php';
 
         .stats-card, .team-card, .value-card {
             animation: fadeInUp 0.6s ease forwards;
-        }
-
-        /* Counter Animation */
-        .counter {
-            opacity: 0;
         }
 
         /* Responsive */
@@ -352,54 +396,6 @@ require_once '../controller/iniciar.php';
 <body>
 
 <?= include_once('../routes/header.phtml')?>
-    <!-- Navigation -->
-    <!-- <header>
-        <nav class="navbar navbar-expand-lg fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="index.php">
-                    <img src="images/logo.jpg" alt="Logo MyHealth" width="140" height="70" class="d-inline-block align-text-top">
-                </a>
-                
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">
-                                <i class="fas fa-home me-2"></i>Início
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="servicos.php">
-                                <i class="fas fa-stethoscope me-2"></i>Serviços
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="sobre.php">
-                                <i class="fas fa-info-circle me-2"></i>Sobre Nós
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contato.php">
-                                <i class="fas fa-envelope me-2"></i>Contato
-                            </a>
-                        </li>
-                    </ul>
-                    
-                    <div class="d-flex gap-2">
-                        <a href="login.php" class="btn btn-outline-light">
-                            <i class="fas fa-sign-in-alt me-2"></i>Login
-                        </a>
-                        <a href="cadastrar.php" class="btn btn-light">
-                            <i class="fas fa-user-plus me-2"></i>Cadastre-se
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header> -->
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -417,19 +413,19 @@ require_once '../controller/iniciar.php';
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-card">
-                        <span class="stats-number counter" data-target="50000">0</span>
+                        <span class="stats-number" data-target="50000">25.874</span>
                         <div class="stats-label">Pacientes Atendidos</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-card">
-                        <span class="stats-number counter" data-target="1200">0</span>
+                        <span class="stats-number " data-target="1200">5.287</span>
                         <div class="stats-label">Médicos Parceiros</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-card">
-                        <span class="stats-number counter" data-target="200000">0</span>
+                        <span class="stats-number" data-target="200000">29.238</span>
                         <div class="stats-label">Consultas Realizadas</div>
                     </div>
                 </div>
@@ -471,3 +467,261 @@ require_once '../controller/iniciar.php';
                                 <h5 class="fw-bold">Inovação Constante</h5>
                                 <p>Sempre evoluindo para oferecer as melhores soluções em saúde.</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section section-bg">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Nossos Valores</h2>
+                <p class="lead col-lg-6 mx-auto">Os princípios que guiam cada decisão e ação em nossa jornada para transformar a saúde digital.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Transparência</h4>
+                        <p>Comunicação clara e honesta em todos os processos, construindo confiança através da transparência total.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Excelência</h4>
+                        <p>Busca constante pela qualidade superior em cada serviço, produto e interação com nossos usuários.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Inovação</h4>
+                        <p>Desenvolvimento contínuo de soluções criativas e tecnológicas para os desafios da saúde moderna.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Compromisso</h4>
+                        <p>Dedicação total ao bem-estar de nossos usuários, com responsabilidade social e ética profissional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Nossa Equipe</h2>
+                <p class="lead col-lg-6 mx-auto">Profissionais apaixonados e dedicados que tornam o MyHealth uma realidade.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-card">
+                        <div class="team-placeholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="team-card-body">
+                            <div class="team-role">CEO & Fundador</div>
+                            <h4 class="team-name">Rondineli Oliveira</h4>
+                            <p class="team-bio">Ceo e fundados da NetoNerd (empresa matriz do projeto MyHealth). Formando em Ciencia da computação pelo UNIFEO, Cientista de dados pela UDEMY. Publicado pela UNIFESO, com o artigo Educação e tecnologia.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-md-6">
+                    <div class="team-card">
+                        <div class="team-placeholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="team-card-body">
+                            <div class="team-role">CTO</div>
+                            <h4 class="team-name">Ana Santos</h4>
+                            <p class="team-bio">Engenheira de software especializada em sistemas de saúde, com expertise em segurança de dados e arquitetura de sistemas complexos.</p>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="col-lg-4 col-md-6">
+                    <div class="team-card">
+                        <div class="team-placeholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="team-card-body">
+                            <div class="team-role">Head de Produto</div>
+                            <h4 class="team-name">Rafael Costa</h4>
+                            <p class="team-bio">Designer de UX/UI com foco em experiência do usuário em aplicações médicas, garantindo interfaces intuitivas e acessíveis.</p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="section section-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="fw-bold mb-4">Nossa História</h2>
+                    <p class="lead">Uma jornada de inovação e dedicação em transformar o cuidado com a saúde. Um projeto da empresa NetoNerd</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-content">
+                                <h4>Fundação</h4>
+                                <p>O MyHealth é pautado em uma reunião de um projeto de Startup, onde foi delimitada a sua principal função e alinhados os seus objetivos.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-content">
+                                <h4>Primeiro passo</h4>
+                                <p>O projeto foi prototipado e esclolhido para ser objeto de estudo do nosso CEO - Rondineli.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2025</div>
+                            <div class="timeline-content">
+                                <h4>Implementação</h4>
+                                <p>Com uma pesquisa fundamentada, Rondineli valida a necessidade urgente do MyHealth para melhorar e agilizar a saúde, apresentando seu projeto à UNIFESO.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h2 class="fw-bold mb-4">Faça Parte da Nossa História</h2>
+                    <p class="lead mb-4">Junte-se a milhares de pessoas que já escolheram o MyHealth para cuidar da sua saúde de forma moderna, segura e eficiente.</p>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <a href="../publics/cadastrar.php" class="btn btn-primary btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>Cadastre-se Agora
+                        </a>
+                        <a href="../publics/login.php" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>Fazer Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>MyHealth</h5>
+                    <p class="mb-4">Revolucionando o cuidado com a saúde através da tecnologia, conectando médicos e pacientes em uma plataforma segura e eficiente.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Links Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="../index.php">Início</a></li>
+                        <li class="mb-2"><a href="sobre.php">Sobre Nós</a></li>
+                        <li class="mb-2"><a href="servicos.php">Serviços</a></li>
+                        <li class="mb-2"><a href="contato.php">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Para Médicos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="cadastrar.php">Cadastro</a></li>
+                        <li class="mb-2"><a href="login.php">Login</a></li>
+                        <li class="mb-2"><a href="#">Portal Médico</a></li>
+                        <li class="mb-2"><a href="#">Suporte</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Para Pacientes</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="cadastrar.php">Cadastro</a></li>
+                        <li class="mb-2"><a href="login.php">Login</a></li>
+                        <li class="mb-2"><a href="#">Agendar Consulta</a></li>
+                        <li class="mb-2"><a href="#">Meu Histórico</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Suporte</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Central de Ajuda</a></li>
+                        <li class="mb-2"><a href="#">Política de Privacidade</a></li>
+                        <li class="mb-2"><a href="#">Termos de Uso</a></li>
+                        <li class="mb-2"><a href="contato.php">Fale Conosco</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 MyHealth - NetoNerd. Todos os direitos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Desenvolvido com <i class="fas fa-heart text-danger"></i> pela equipe NetoNerd</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stats-number[data-target]');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current).toLocaleString();
+                }, 20);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    if (entry.target.querySelector('.stats-number[data-target]')) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        }, { threshold: 0.1 });

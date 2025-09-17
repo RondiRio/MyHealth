@@ -144,5 +144,5 @@ try {
     $_SESSION['notificacao'] = ['tipo' => 'erro', 'mensagem' => 'Erro ao salvar consulta: ' . $e->getMessage()];
 }
 
-header('Location: consulta.php');
+header('Location: ../medico/consulta.php');
 exit;

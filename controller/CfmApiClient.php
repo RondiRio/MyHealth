@@ -11,8 +11,8 @@ class CfmApiClient
             [
                 'medico' => array_merge([
                     'nome' => '',
-                    'ufMedico' => '',
-                    'crmMedico' => '',
+                    'ufMedico' => $_POST['uf'],
+                    'crmMedico' => $_POST['identificador'],
                 ], $filtros),
                 'page' => $pagina,
                 'pageSize' => 1,

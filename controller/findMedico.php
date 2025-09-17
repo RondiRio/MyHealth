@@ -13,8 +13,8 @@ echo '</pre>';
 function fetchDoctors(): ?array
 {
     $url = 'https://portal.cfm.org.br/api_rest_php/api/v1/medicos/buscar_medicos';
-    $uf = 'PE'; # <-- UF setada inicialmente para simular uma pesquisa
-    $crm = '13386'; # <-- CRM setado inicialmente para simular uma pesquisa
+    $uf = $_POST['uf']; # <-- UF setada inicialmente para simular uma pesquisa
+    $crm = $_POST['identificador']; # <-- CRM setado inicialmente para simular uma pesquisa
     $data = [
         [
             'medico' => [

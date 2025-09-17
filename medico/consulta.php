@@ -15,7 +15,7 @@ unset($_SESSION['notificacao']);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Nova Consulta - MediCare</title>
+    <title>Nova Consulta - MyHealth</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -495,10 +495,10 @@ unset($_SESSION['notificacao']);
     <div class="sidebar-header">
         <div class="logo">
             <i class="fas fa-heartbeat"></i>
-            <h3>MediCare</h3>
+            <h3>MyHealth</h3>
         </div>
         <div class="doctor-profile">
-            <img src="uploads/fotos_perfil/<?= htmlspecialchars($medico['foto_perfil'] ?: 'default-medico.png') ?>" class="profile-img" alt="Foto de perfil">
+            <img src="../uploads/fotos_perfil/<?= htmlspecialchars($medico['foto_perfil'] ?: 'default-medico.png') ?>" class="profile-img" alt="Foto de perfil">
             <div class="profile-name">Dr. <?= htmlspecialchars($medico['nome']); ?></div>
             <div class="doctor-crm">CRM: <?= htmlspecialchars($medico['crm']); ?></div>
             <?php if (!empty($medico['especialidade'])): ?>

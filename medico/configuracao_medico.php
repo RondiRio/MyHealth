@@ -11,7 +11,98 @@ $dadosMedico = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$dadosMedico) {
-    die("Erro: Não foi possível encontrar os dados do médico.");
+    // A linha abaixo interrompe o script e exibe uma página de erro amigável.
+    // Usamos a sintaxe HEREDOC (<<<HTML) para escrever o bloco HTML de forma limpa.
+    echo <<<HTML
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro na Consulta</title>
+    <style>
+        /* Estilo geral da página */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* Container da mensagem de erro */
+        .error-container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 90%;
+            border-top: 5px solid #d9534f; /* Borda vermelha no topo para indicar erro */
+        }
+
+        /* Ícone de erro (SVG) */
+        .error-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        /* Título do erro */
+        .error-container h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            color: #d9534f; /* Cor vermelha de erro */
+        }
+
+        /* Parágrafo com a mensagem */
+        .error-container p {
+            margin: 0 0 25px 0;
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Botão para voltar */
+        .back-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff; /* Azul padrão */
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3; /* Azul mais escuro no hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <svg class="error-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#d9534f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Ocorreu um Erro</h1>
+        <p>Não foi possível encontrar os dados do médico solicitado. Por favor, verifique as informações e tente novamente.</p>
+        <a href="../publics/login.php)" class="back-button">Voltar</a>
+    </div>
+
+</body>
+</html>
+HTML;
+
+    // A função exit() é importante para garantir que o resto do script não seja executado,
+    // assim como o die() fazia.
+    exit;
 }
 
 $notificacao = $_SESSION['notificacao'] ?? null;
@@ -22,7 +113,7 @@ unset($_SESSION['notificacao']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configurações do Perfil - MediCare</title>
+    <title>Configurações do Perfil - MyHealth</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -437,7 +528,7 @@ unset($_SESSION['notificacao']);
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-heartbeat"></i>
-                <h3>MediCare</h3>
+                <h3>MyHealth</h3>
             </div>
         </div>
 

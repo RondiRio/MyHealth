@@ -47,10 +47,10 @@ $stmtDocumentos->close();
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-heartbeat"></i>
-                <h3>MediCare</h3>
+                <h3>MyHealth</h3>
             </div>
             <div class="patient-profile">
-                <img src="../uploads/fotos_perfil/<?= htmlspecialchars($dadosPaciente['foto_perfil'] ?: 'default-paciente.png') ?>" class="profile-img" alt="Foto de perfil">
+                <img src="../uploads/fotos_perfil/<?= $dadosPaciente['foto_perfil'] ?>" class="profile-img" alt="Foto de perfil">
                 <div class="patient-name"><?= htmlspecialchars($dadosPaciente['nome_paciente']); ?></div>
                 <div class="patient-id">Paciente #<?= str_pad($dadosPaciente['id'], 5, '0', STR_PAD_LEFT) ?></div>
             </div>

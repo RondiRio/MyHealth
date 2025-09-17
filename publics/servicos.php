@@ -502,7 +502,7 @@ require_once '../controller/iniciar.php';
                     </div>
                 </div>
                 <div class="col-lg-6 order-lg-1">
-                    <img src="images/Exercicios fisicos.jpg" class="img-fluid rounded-4 shadow-lg" alt="Exercícios Físicos">
+                    <img src="../images/Exercicios fisicos.jpg" class="img-fluid rounded-4 shadow-lg" alt="Exercícios Físicos">
                 </div>
             </div>
         </div>
@@ -547,23 +547,27 @@ require_once '../controller/iniciar.php';
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="fw-bold">Planos e Preços</h2>
-                <p class="lead">Escolha o plano ideal para suas necessidades de saúde</p>
+                <p class="lead">Escolha o plano ideal para seus médicos</p>
             </div>
             
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card pricing-card h-100">
                         <div class="card-header text-center">
-                            <h4 class="fw-bold">Básico</h4>
-                            <div class="price">R$ 29<span class="price-period">/mês</span></div>
+                            <h4 class="fw-bold">Begin</h4>
+                            <div class="price">R$ 299,99<span class="price-period">/mês</span></div>
                         </div>
                         <div class="card-body p-4">
                             <ul class="feature-list">
-                                <li><i class="fas fa-check"></i>Prontuário digital básico</li>
-                                <li><i class="fas fa-check"></i>Agendamento de consultas</li>
-                                <li><i class="fas fa-check"></i>Lembretes por email</li>
-                                <li><i class="fas fa-check"></i>Chat com médicos (limitado)</li>
-                                <li><i class="fas fa-check"></i>Suporte básico</li>
+                                <li><i class="fas fa-check"></i>Prontuário digital</li>
+                                <!-- <li><i class="fas fa-check"></i>Agendamento de consultas</li> -->
+                                <!-- <li><i class="fas fa-check"></i>Lembretes por email</li> -->
+                                <!-- <li><i class="fas fa-check"></i>Chat com médicos (limitado)</li> -->
+                                <li><i class="fas fa-check"></i>Suporte integral</li>
+                                <li><i class="fas fa-check"></i>Até 20 profissionais cadastrados</li>
+                                <!-- <li><i class="fas fas-check"></i></li> -->
+                                <li><i class="fas fa-check"></i>Histórico de atendimentos</li>
+                                <li><i class="fas fa-check"></i>Dashboard com métricas</li>
                             </ul>
                             <div class="d-grid mt-4">
                                 <a href="cadastrar.php" class="btn btn-outline-primary">Começar Agora</a>
@@ -576,14 +580,15 @@ require_once '../controller/iniciar.php';
                     <div class="card pricing-card featured h-100">
                         <div class="card-header text-center">
                             <h4 class="fw-bold">Premium</h4>
-                            <div class="price">R$ 79<span class="price-period">/mês</span></div>
+                            <div class="price">R$ 599,99<span class="price-period">/mês</span></div>
                         </div>
                         <div class="card-body p-4">
                             <ul class="feature-list">
-                                <li><i class="fas fa-check"></i>Todos os recursos do Básico</li>
-                                <li><i class="fas fa-check"></i>Prontuário completo + histórico</li>
-                                <li><i class="fas fa-check"></i>Chat ilimitado com médicos</li>
-                                <li><i class="fas fa-check"></i>Videochamadas médicas</li>
+                                <li><i class="fas fa-check"></i>Todos os recursos do Begin</li>
+                                <li><i class="fas fa-check"></i>Até 100 profissionais cadastrados</li>
+                                <li><i class="fas fa-check"></i>Inclusão de imagens de ressonancia magnetica</li>
+                                <li><i class="fas fa-check"></i>IA interpretativa de imagens</li>
+                                <li><i class="fas fa-check"></i>Auxilio em tomada de decisões por IA (limites podem ser aplicados)</li>
                                 <li><i class="fas fa-check"></i>Monitoramento avançado</li>
                                 <li><i class="fas fa-check"></i>Orientações personalizadas</li>
                                 <li><i class="fas fa-check"></i>Relatórios detalhados</li>
@@ -599,17 +604,21 @@ require_once '../controller/iniciar.php';
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card pricing-card h-100">
                         <div class="card-header text-center">
-                            <h4 class="fw-bold">Empresarial</h4>
-                            <div class="price">R$ 199<span class="price-period">/mês</span></div>
+                            <h4 class="fw-bold">Special Medical</h4>
+                            <div class="price">R$ 1699,99<span class="price-period">/mês</span></div>
                         </div>
                         <div class="card-body p-4">
                             <ul class="feature-list">
                                 <li><i class="fas fa-check"></i>Todos os recursos Premium</li>
-                                <li><i class="fas fa-check"></i>Até 50 funcionários</li>
-                                <li><i class="fas fa-check"></i>Dashboard empresarial</li>
+                                <li><i class="fas fa-check"></i>Até 500 funcionários</li>
+                                <li><i class="fas fa-check"></i>IA descritiva de exames imageticos</li>
+                                <li><i class="fas fa-check"></i>Auxilio em tomada de decisões (sem restrições de limite)</li>
                                 <li><i class="fas fa-check"></i>Relatórios coletivos</li>
                                 <li><i class="fas fa-check"></i>Medicina ocupacional</li>
+                                <li><i class="fas fa-check"></i>Telemedicina</li>
                                 <li><i class="fas fa-check"></i>Campanhas de vacinação</li>
+                                <li><i class="fas fa-check"></i>Ambiente Medicina Geriátrica</li>
+                                <li><i class="fas fa-check"></i>Inclusão de tomografias, radiografias, eletrocardiograma, e outros exames</li>
                                 <li><i class="fas fa-check"></i>Gerente de conta dedicado</li>
                                 <li><i class="fas fa-check"></i>Integração com RH</li>
                             </ul>
@@ -649,7 +658,7 @@ require_once '../controller/iniciar.php';
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <h5 class="fw-bold mb-3">
-                        <img src="images/logo.jpg" alt="MyHealth" width="40" height="40" class="rounded me-2">
+                        <img src="../images/logo.jpg" alt="MyHealth" width="40" height="40" class="rounded me-2">
                         MyHealth
                     </h5>
                     <p class="mb-3">Conectando saúde, cuidando de vidas. Sua plataforma de saúde preventiva.</p>

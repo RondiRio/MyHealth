@@ -36,13 +36,13 @@ class Paciente {
      * @return array Retorna um array com as alergias.
      */
     public function getAllergies(): array {
-        $stmt = $this->conn->prepare("SELECT id, tipo, nome_agente, sintomas FROM alergias WHERE id_paciente = ? ORDER BY tipo, nome_agente");
+        $stmt = $this->conn->prepare("SELECT id, tipo_alergia, nome_agente, sintomas FROM alergias WHERE id_paciente = ? ORDER BY tipo_alergia, nome_agente");
         $stmt->bind_param("i", $this->paciente_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $alergias = ['alimentares' => [], 'respiratorias' => []];
         while ($row = $result->fetch_assoc()) {
-            $alergias[$row['tipo']][] = $row;
+            $alergias[$row['tipo_alergia']][] = $row;
         }
         return $alergias;
     }

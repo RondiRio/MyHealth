@@ -30,8 +30,6 @@ class ConexaoBD {
         return $this->conn;
     }
 
-    // MUDANÇA 3: Adicionando o método de consultas seguras que criamos.
-    // Agora, toda a lógica de SQL seguro pertence a esta classe.
     public function proteger_sql($query, $params = []) {
         $stmt = $this->conn->prepare($query);
         if ($stmt === false) {

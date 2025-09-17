@@ -386,12 +386,12 @@ unset($_SESSION['notificacao']);
                         </div>
                         <h4 class="fw-bold mb-3">Telefone</h4>
                         <p class="text-muted mb-3">Seg à Sex, 8h às 18h</p>
-                        <a href="tel:+5511999999999" class="text-primary fw-semibold text-decoration-none">
-                            (11) 99999-9999
+                        <a href="tel:+5521977395867" class="text-primary fw-semibold text-decoration-none">
+                            (21) 977395867
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <!-- <div class="col-lg-3 col-md-6">
                     <div class="contact-card">
                         <div class="contact-icon">
                             <i class="fas fa-comments"></i>
@@ -402,7 +402,7 @@ unset($_SESSION['notificacao']);
                             Iniciar Chat
                         </button>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-lg-3 col-md-6">
                     <div class="contact-card">
                         <div class="contact-icon">
@@ -410,9 +410,8 @@ unset($_SESSION['notificacao']);
                         </div>
                         <h4 class="fw-bold mb-3">Endereço</h4>
                         <p class="text-muted mb-0">
-                            Av. Paulista, 1000<br>
-                            São Paulo, SP<br>
-                            01310-100
+                            Rua Alameda Monte<br>
+                            Teresópolis, RJ
                         </p>
                     </div>
                 </div>
@@ -491,7 +490,7 @@ unset($_SESSION['notificacao']);
                     </div>
                 </div>
                 
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
                     <div class="map-container">
                         <div class="text-center">
                             <i class="fas fa-map-marked-alt fa-3x mb-3"></i>
@@ -499,13 +498,13 @@ unset($_SESSION['notificacao']);
                             <p>Av. Paulista, 1000<br>São Paulo, SP</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="section">
+    <!-- <section class="section">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="fw-bold">Perguntas Frequentes</h2>
@@ -583,7 +582,7 @@ unset($_SESSION['notificacao']);
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-5">
@@ -591,13 +590,13 @@ unset($_SESSION['notificacao']);
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <h5 class="fw-bold mb-3">
-                        <img src="images/logo.jpg" alt="MyHealth" width="40" height="40" class="rounded me-2">
+                        <img src="../images/logo.jpg" alt="MyHealth" width="40" height="40" class="rounded me-2">
                         MyHealth
                     </h5>
                     <p class="mb-3">Conectando saúde, cuidando de vidas. Sua plataforma de saúde preventiva.</p>
                     <p class="mb-0">
                         <i class="fas fa-copyright me-1"></i>
-                        <?= date('Y') ?> MyHealth Plataforma de Saúde | 
+                        <?= date('Y') ?> MyHealth - NetoNerd Suport TI para todos | 
                         <a href="mailto:suporte@myhealth.com" class="text-white text-decoration-none">
                             <i class="fas fa-envelope me-1"></i>suporte@myhealth.com
                         </a>

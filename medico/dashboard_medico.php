@@ -500,7 +500,7 @@
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-heartbeat"></i>
-                <h3>MediCare</h3>
+                <h3>MyHealth</h3>
             </div>
             <div class="doctor-profile">
                 <img src="../uploads/fotos_perfil/<?= htmlspecialchars($dadosMedico['foto_perfil'] ?: 'default-paciente.png') ?>" class="profile-img" alt="Foto de perfil">
