@@ -755,7 +755,7 @@ $seguranca->proteger_pagina('medico');
             </a>
         </div>
 
-        <form action="../routes/logout.php" method="post">
+        <form action="../controller/logout.php" method="post">
             <button type="submit" class="logout-btn">
                 <i class="fas fa-sign-out-alt"></i>
                 Encerrar Sessão

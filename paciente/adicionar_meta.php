@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
 
-        <form action="logout.php" method="post">
+        <form action="../controller/logout.php" method="post">
             <button type="submit" class="btn-logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Encerrar Sessão</span>

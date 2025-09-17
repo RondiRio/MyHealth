@@ -88,7 +88,7 @@ $consultasRecentes = $paciente->getContagemConsultasRecentes();
             </a>
         </div>
 
-        <form action="logout.php" method="post">
+        <form action="../controller/logout.php" method="post">
             <button type="submit" class="btn-logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Encerrar Sessão</span>
@@ -289,6 +289,46 @@ $consultasRecentes = $paciente->getContagemConsultasRecentes();
                         <canvas class="mini-chart" id="weightChart"></canvas>
                     </div>
                     <?php endif; ?>
+                    <?php if (isset($latestVitals['Temperatura'])): $vital = $latestVitals['Temperatura']; ?>
+                    <div class="vital-sign">
+                        <div class="vital-info">
+                            <h6>Temperatura</h6>
+                            <div class="vital-value"><?php echo htmlspecialchars($vital['valor1']); ?> <?php echo htmlspecialchars($vital['unidade']); ?></div>
+                            <div class="vital-date"><?php echo htmlspecialchars($vital['data_formatada']); ?></div>
+                        </div>
+                        <canvas class="mini-chart" id="tempChart"></canvas>
+                    </div>
+                    <?php endif; ?>
+                    <?php if (isset($latestVitals['Frequência Cardíaca'])): $vital = $latestVitals['Frequência Cardíaca']; ?>
+                    <div class="vital-sign">
+                        <div class="vital-info">
+                            <h6>Frequência Cardíaca</h6>
+                            <div class="vital-value"><?php echo htmlspecialchars($vital['valor1']); ?> <?php echo htmlspecialchars($vital['unidade']); ?></div>
+                            <div class="vital-date"><?php echo htmlspecialchars($vital['data_formatada']); ?></div>
+                        </div>
+                        <canvas class="mini-chart" id="heartRateChart"></canvas>
+                    </div>
+                    <?php endif; ?>
+                    <?php if (isset($latestVitals['Altura'])): $vital = $latestVitals['Altura']; ?>
+                    <div class="vital-sign">
+                        <div class="vital-info">
+                            <h6>Altura</h6>
+                            <div class="vital-value"><?php echo htmlspecialchars($vital['valor1']); ?> <?php echo htmlspecialchars($vital['unidade']); ?></div>
+                            <div class="vital-date"><?php echo htmlspecialchars($vital['data_formatada']); ?></div>
+                        </div>
+                        <canvas class="mini-chart" id="heightChart"></canvas>
+                    </div>
+                    <?php endif; ?>
+                    <?php if (isset($latestVitals['IMC'])): $vital = $latestVitals['IMC']; ?>
+                    <div class="vital-sign">
+                        <div class="vital-info">
+                            <h6>IMC</h6>
+                            <div class="vital-value"><?php echo htmlspecialchars($vital['valor1']); ?> <?php echo htmlspecialchars($vital['unidade']); ?></div>
+                            <div class="vital-date"><?php echo htmlspecialchars($vital['data_formatada']); ?></div>
+                        </div>
+                        <canvas class="mini-chart" id="imcChart"></canvas>
+                    </div>
+                    <?php endif; ?>
                     <div class="text-center mt-3">
                         <a href="registrar_sinal_vital.php" class="btn btn-outline-primary btn-sm">Registrar Sinal Vital</a>
                     </div>
@@ -343,7 +383,7 @@ $consultasRecentes = $paciente->getContagemConsultasRecentes();
                     </div>
                 </div>
             </div>
-
+            
             <!-- Timeline Section -->
             <div class="timeline-section">
                 <div class="card-header"><i class="fas fa-history"></i> Linha do Tempo da Saúde</div>
