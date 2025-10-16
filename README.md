@@ -51,29 +51,26 @@ O MyHealth foi construído utilizando uma arquitetura moderna, com um backend ro
 
 * **Backend (API):**
     * **Linguagem:** **PHP 8.4**
-    * **Framework:** **Laravel 11** (Recomendado para estrutura, segurança e escalabilidade)
+  
     * **Acesso a Dados:** Eloquent ORM (do Laravel) para interações seguras com o banco de dados.
     * **Autenticação:** **JWT (JSON Web Tokens)** para proteger os endpoints da API.
 * **Frontend (Aplicação Web):**
-    * **Framework:** **React 18** (com Vite para build)
     * **Linguagens:** JavaScript (ES6+), JSX, HTML5, CSS3
-    * **UI Kit:** **Material-UI (MUI)** para componentes de interface modernos e responsivos.
     * **Visualização de Dados:** **Chart.js** para a criação dos gráficos de métricas de saúde.
 * **Banco de Dados:**
     * **SGBD:** **MySQL 8**
 * **Ambiente de Desenvolvimento:**
-    * **Contêineres:** **Docker** e **Docker Compose** para criar um ambiente de desenvolvimento padronizado e isolado.
 
 ```
 +----------------------------------+
-|      Frontend (React + MUI)      |
+|      Frontend (HTML)      |
 |    (Executando no Navegador)     |
 +----------------------------------+
                 ^
                 | API Calls (JSON via HTTPS)
                 v
 +----------------------------------+
-|     Backend API (PHP/Laravel)    |
+|     Backend API (PHP)    |
 |                                  |
 |   - Autenticação JWT             |
 |   - Regras de Negócio            |
